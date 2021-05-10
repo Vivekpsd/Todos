@@ -2,7 +2,7 @@ import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import TodoItem from './TodoItem';
 
-export default function TodoList() {
+export default function TodoList(props) {
   return (
     <div>
       <Container fluid className='filter-box'>
@@ -19,7 +19,7 @@ export default function TodoList() {
         </Row>
         <Row>
           <Col>
-            <TodoItem />
+            <TodoItem items={props.items} />
           </Col>
         </Row>
         <Row className='justify-content-center delete-box'>
