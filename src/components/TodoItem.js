@@ -13,9 +13,15 @@ export default function TodoItem(props) {
             <hr></hr>
             {items.map((item) => {
               return (
-                <Card className='todo-item' key={item.key}>
+                <Card className='todo-item ' key={item.key}>
                   <span>
-                    {item.text}
+                    <input
+                      type='text'
+                      value={item.text}
+                      onChange={(e) =>
+                        props.setUpdate(e.target.value, item.key)
+                      }
+                    />
                     <AiFillDelete
                       className='del-icon'
                       onClick={() => props.deleteItem(item.key)}

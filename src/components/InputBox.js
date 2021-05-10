@@ -17,6 +17,7 @@ class InputBox extends React.Component {
     this.handleInput = this.handleInput.bind(this);
     this.addItem = this.addItem.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
+    this.setUpdate = this.setUpdate.bind(this);
   }
 
   handleInput = (e) => {
@@ -53,6 +54,20 @@ class InputBox extends React.Component {
       items: filteredItems,
     });
   };
+
+  setUpdate = (value, key) => {
+    const items = this.state.items;
+    items.map((item) => {
+      if (item.key === key) {
+        item.text = value;
+      }
+    });
+
+    this.setState({
+      items: items,
+    });
+  };
+
   render() {
     return (
       <div>
@@ -84,7 +99,11 @@ class InputBox extends React.Component {
         </form>
         <center>
           <TodoList />
-          <TodoItem items={this.state.items} deleteItem={this.deleteItem} />
+          <TodoItem
+            items={this.state.items}
+            deleteItem={this.deleteItem}
+            setUpdate={this.setUpdate}
+          />
           <Row className='justify-content-center delete-box'>
             <Col md={3} sm={12}>
               <div className='delete-btn'>Delete Completed </div>

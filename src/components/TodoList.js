@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 
-export default function TodoList(props) {
+export default function TodoList() {
   return (
     <div>
       <Container fluid className='filter-box'>

@@ -70,6 +70,14 @@
   margin-bottom: 8px;
 }
 
+.todo-item input {
+  border: 0;
+}
+
+.todo-item input:focus {
+  outline: none;
+}
+
 .delete-box {
   padding-top: 20px;
 }
