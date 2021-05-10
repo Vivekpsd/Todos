@@ -96,3 +96,9 @@
   right: 10px;
   cursor: pointer;
 }
+
+.check-icon {
+  position: absolute;
+  right: 45px;
+  cursor: pointer;
+}

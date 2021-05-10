@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Col, Row, Card } from 'react-bootstrap';
 import { AiFillDelete } from 'react-icons/ai';
+import { FaCheck } from 'react-icons/fa';
 
 export default function TodoItem(props) {
   const items = props.items;
@@ -25,6 +26,10 @@ export default function TodoItem(props) {
                     <AiFillDelete
                       className='del-icon'
                       onClick={() => props.deleteItem(item.key)}
+                    />
+                    <FaCheck
+                      className='check-icon'
+                      onClick={() => props.completeItem(item.key)}
                     />
                   </span>
                 </Card>

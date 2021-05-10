@@ -18,6 +18,7 @@ class InputBox extends React.Component {
     this.addItem = this.addItem.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
     this.setUpdate = this.setUpdate.bind(this);
+    this.completeItem = this.completeItem.bind(this);
   }
 
   handleInput = (e) => {
@@ -45,7 +46,6 @@ class InputBox extends React.Component {
         },
       });
     }
-    console.log(newItem);
   };
 
   deleteItem = (key) => {
@@ -55,11 +55,41 @@ class InputBox extends React.Component {
     });
   };
 
+  deleteAllItem = (key) => {
+    this.setState({
+      items: [],
+    });
+  };
+
   setUpdate = (value, key) => {
     const items = this.state.items;
     items.map((item) => {
       if (item.key === key) {
         item.text = value;
+      }
+    });
+
+    this.setState({
+      items: items,
+    });
+  };
+
+  completeItem = (key) => {
+    let newValue = '';
+    this.state.items.map((item) => {
+      if (item.key === key) {
+        item.completed = true;
+        newValue = item.text
+          .split('')
+          .map((char) => char + '\u0336')
+          .join('');
+      }
+    });
+
+    const items = this.state.items;
+    items.map((item) => {
+      if (item.key === key && item.completed === true) {
+        item.text = newValue;
       }
     });
 
@@ -103,13 +133,16 @@ class InputBox extends React.Component {
             items={this.state.items}
             deleteItem={this.deleteItem}
             setUpdate={this.setUpdate}
+            completeItem={this.completeItem}
           />
           <Row className='justify-content-center delete-box'>
             <Col md={3} sm={12}>
               <div className='delete-btn'>Delete Completed </div>
             </Col>
             <Col md={3} sm={12}>
-              <div className='delete-btn'>Delete All </div>
+              <div className='delete-btn' onClick={this.deleteAllItem}>
+                Delete All{' '}
+              </div>
             </Col>
           </Row>
         </center>
