@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
+import TodoItem from './TodoItem';
 import TodoList from './TodoList';
 
 class InputBox extends React.Component {
@@ -15,6 +16,7 @@ class InputBox extends React.Component {
     };
     this.handleInput = this.handleInput.bind(this);
     this.addItem = this.addItem.bind(this);
+    this.deleteItem = this.deleteItem.bind(this);
   }
 
   handleInput = (e) => {
@@ -43,6 +45,13 @@ class InputBox extends React.Component {
       });
     }
     console.log(newItem);
+  };
+
+  deleteItem = (key) => {
+    const filteredItems = this.state.items.filter((item) => item.key !== key);
+    this.setState({
+      items: filteredItems,
+    });
   };
   render() {
     return (
@@ -74,7 +83,16 @@ class InputBox extends React.Component {
           </Container>
         </form>
         <center>
-          <TodoList items={this.state.items} />
+          <TodoList />
+          <TodoItem items={this.state.items} deleteItem={this.deleteItem} />
+          <Row className='justify-content-center delete-box'>
+            <Col md={3} sm={12}>
+              <div className='delete-btn'>Delete Completed </div>
+            </Col>
+            <Col md={3} sm={12}>
+              <div className='delete-btn'>Delete All </div>
+            </Col>
+          </Row>
         </center>
       </div>
     );
