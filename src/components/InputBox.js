@@ -19,6 +19,7 @@ class InputBox extends React.Component {
     this.deleteItem = this.deleteItem.bind(this);
     this.setUpdate = this.setUpdate.bind(this);
     this.completeItem = this.completeItem.bind(this);
+    this.deleteCompletedItem = this.deleteCompletedItem.bind(this);
   }
 
   handleInput = (e) => {
@@ -55,7 +56,7 @@ class InputBox extends React.Component {
     });
   };
 
-  deleteAllItem = (key) => {
+  deleteAllItem = () => {
     this.setState({
       items: [],
     });
@@ -98,6 +99,15 @@ class InputBox extends React.Component {
     });
   };
 
+  deleteCompletedItem = () => {
+    const filteredItems = this.state.items.filter(
+      (item) => item.completed !== true
+    );
+    this.setState({
+      items: filteredItems,
+    });
+  };
+
   render() {
     return (
       <div>
@@ -129,15 +139,31 @@ class InputBox extends React.Component {
         </form>
         <center>
           <TodoList />
-          <TodoItem
-            items={this.state.items}
-            deleteItem={this.deleteItem}
-            setUpdate={this.setUpdate}
-            completeItem={this.completeItem}
-          />
+          {this.state.items.length === 0 ? (
+            <div>
+              <Container fluid className='filter-box'>
+                <Row className='justify-content-center '>
+                  <Col md={6}>
+                    <div className='alert alert-success alert-msg'>
+                      No Task Pending. Enjoy Your Free Time!
+                    </div>
+                  </Col>
+                </Row>
+              </Container>
+            </div>
+          ) : (
+            <TodoItem
+              items={this.state.items}
+              deleteItem={this.deleteItem}
+              setUpdate={this.setUpdate}
+              completeItem={this.completeItem}
+            />
+          )}
           <Row className='justify-content-center delete-box'>
             <Col md={3} sm={12}>
-              <div className='delete-btn'>Delete Completed </div>
+              <div className='delete-btn' onClick={this.deleteCompletedItem}>
+                Delete Completed{' '}
+              </div>
             </Col>
             <Col md={3} sm={12}>
               <div className='delete-btn' onClick={this.deleteAllItem}>
