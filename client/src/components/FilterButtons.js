@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 
-export default function FilterButtons(props) {
+export default function FilterButtons() {
   return (
     <div>
       <Container fluid className='filter-box'>

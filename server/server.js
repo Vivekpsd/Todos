@@ -9,8 +9,11 @@ app.use(express.json());
 connectDB();
 
 app.get('/', (req, res) => {
-  res.send('Hello');
+  res.send('API Running');
 });
+
+//Define Routes
+app.use('/api/Todos', require('./routes/api/Todos'));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

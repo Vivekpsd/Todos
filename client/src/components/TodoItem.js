@@ -16,23 +16,20 @@ export default function TodoItem(props) {
             {items.map((item) => {
               return (
                 <Zoom duration={200}>
-                  <Card className='todo-item ' key={item.key}>
+                  <Card className='todo-item ' key={item._id}>
                     <span>
                       <input
                         type='text'
-                        value={item.text}
-                        onChange={(e) =>
-                          props.setUpdate(e.target.value, item.key)
-                        }
+                        value={item.task}
                         className={item.class}
                       />
                       <AiFillDelete
                         className='del-icon'
-                        onClick={() => props.deleteItem(item.key)}
+                        onClick={() => props.deleteItem(item._id)}
                       />
                       <FaCheck
                         className='check-icon'
-                        onClick={() => props.completeItem(item.key)}
+                        onClick={() => props.checkItem(item._id)}
                       />
                     </span>
                   </Card>
