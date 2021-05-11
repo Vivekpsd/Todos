@@ -23,10 +23,14 @@ class TodosHandler extends React.Component {
       },
     };
     this.deleteItem = this.deleteItem.bind(this);
-    this.checkItem = this.checkItem.bind(this);
+    this.checkedItem = this.checkedItem.bind(this);
     this.handleInput = this.handleInput.bind(this);
     this.addTodo = this.addTodo.bind(this);
     this.deleteAllItem = this.deleteAllItem.bind(this);
+    this.deleteCompletedItem = this.deleteCompletedItem.bind(this);
+    this.getCompletedItems = this.getCompletedItems.bind(this);
+    this.getNotCompletedItems = this.getNotCompletedItems.bind(this);
+    this.getAllItems = this.getAllItems.bind(this);
   }
 
   async componentDidMount() {
@@ -55,6 +59,15 @@ class TodosHandler extends React.Component {
         .get('/getTodos')
         .then((res) => this.setState({ todos: res.data }));
     }
+
+    this.setState({
+      currentTodo: {
+        task: '',
+        completed: false,
+        class: '',
+      },
+    });
+    document.getElementById('myForm').reset();
   };
 
   deleteItem = async (key) => {
@@ -65,8 +78,19 @@ class TodosHandler extends React.Component {
       .then((res) => this.setState({ todos: res.data }));
   };
 
-  checkItem = (key) => {
-    alert('Todo');
+  deleteCompletedItem = async () => {
+    await axios.delete('/delCompletedTodos/');
+    await axios
+      .get('/getTodos')
+      .then((res) => this.setState({ todos: res.data }));
+  };
+
+  checkedItem = async (key) => {
+    await axios.post(`/updateTodo/${key}`);
+
+    await axios
+      .get('/getTodos')
+      .then((res) => this.setState({ todos: res.data }));
   };
 
   deleteAllItem = async () => {
@@ -77,10 +101,38 @@ class TodosHandler extends React.Component {
       .then((res) => this.setState({ todos: res.data }));
   };
 
+  // Filtering
+
+  getCompletedItems = async () => {
+    await axios
+      .get('/getTodos')
+      .then((res) => this.setState({ todos: res.data }));
+
+    let allTodos = this.state.todos.filter((todo) => todo.completed !== false);
+
+    this.setState({ todos: allTodos });
+  };
+
+  getNotCompletedItems = async () => {
+    await axios
+      .get('/getTodos')
+      .then((res) => this.setState({ todos: res.data }));
+
+    let allTodos = this.state.todos.filter((todo) => todo.completed === false);
+
+    this.setState({ todos: allTodos });
+  };
+
+  getAllItems = async () => {
+    await axios
+      .get('/getTodos')
+      .then((res) => this.setState({ todos: res.data }));
+  };
+
   render() {
     return (
       <div>
-        <form onSubmit={this.addTodo}>
+        <form onSubmit={this.addTodo} id='myForm'>
           <Container>
             <Row className='justify-content-center align-items-center'>
               <Col xl={3} md={0}></Col>
@@ -107,7 +159,11 @@ class TodosHandler extends React.Component {
           </Container>
         </form>
         <center>
-          <FilterButtons />
+          <FilterButtons
+            getCompletedItems={this.getCompletedItems}
+            getNotCompletedItems={this.getNotCompletedItems}
+            getAllItems={this.getAllItems}
+          />
 
           {this.state.todos.length === 0 ? (
             <div>
@@ -125,13 +181,15 @@ class TodosHandler extends React.Component {
             <TodoItem
               items={this.state.todos}
               deleteItem={this.deleteItem}
-              checkItem={this.checkItem}
+              checkedItem={this.checkedItem}
             />
           )}
 
           <Row className='justify-content-center delete-box'>
             <Col md={3} sm={12}>
-              <div className='delete-btn'>Delete Completed </div>
+              <div className='delete-btn' onClick={this.deleteCompletedItem}>
+                Delete Completed{' '}
+              </div>
             </Col>
             <Col md={3} sm={12}>
               <div className='delete-btn' onClick={this.deleteAllItem}>

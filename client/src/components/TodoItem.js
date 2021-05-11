@@ -30,7 +30,7 @@ export default function TodoItem(props) {
                       />
                       <FaCheck
                         className='check-icon'
-                        onClick={() => props.checkItem(item._id)}
+                        onClick={() => props.checkedItem(item._id)}
                       />
                     </span>
                   </Card>

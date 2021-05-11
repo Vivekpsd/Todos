@@ -106,6 +106,7 @@
 
 .striked {
   text-decoration: line-through;
+  color: #777;
 }
 
 .alert-message {

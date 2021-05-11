@@ -22,11 +22,48 @@ router.post('/addTodo', async (req, res) => {
   }
 });
 
+// Update Todo Item
+
+router.post('/updateTodo/:id', async (req, res) => {
+  let todoItem = await Todos.findById(req.params.id);
+
+  if (!todoItem.completed) {
+    //update
+    try {
+      todoItem = await Todos.updateOne(
+        { _id: req.params.id },
+        {
+          $set: {
+            completed: true,
+            class: 'striked',
+          },
+        }
+      );
+      return res.json(todoItem);
+    } catch (err) {
+      console.log(err.message);
+    }
+  } else {
+    try {
+      todoItem = await Todos.updateOne(
+        { _id: req.params.id },
+        {
+          $set: {
+            completed: false,
+            class: '',
+          },
+        }
+      );
+      return res.json(todoItem);
+    } catch (err) {
+      console.log(err.message);
+    }
+  }
+});
+
 //Get Completed List
 
-router.get('/getCompleted', (req, res) => {
-  res.send('Completed Route');
-});
+router.get('/getCompleted/:id', async (req, res) => {});
 
 //Get Incompleted List
 router.get('/getInCompleted', (req, res) => {
@@ -45,6 +82,17 @@ router.delete('/delTodos', (req, res) => {
       res.json({ removeAll: true });
     } catch (err) {
       console.log(err.message);
+    }
+  });
+});
+
+// Delete Completed Todos
+router.delete('/delCompletedTodos', (req, res) => {
+  Todos.deleteMany({ completed: true }, function (err, result) {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(result);
     }
   });
 });
