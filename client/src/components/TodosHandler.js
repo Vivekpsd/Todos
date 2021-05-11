@@ -26,6 +26,7 @@ class TodosHandler extends React.Component {
     this.checkItem = this.checkItem.bind(this);
     this.handleInput = this.handleInput.bind(this);
     this.addTodo = this.addTodo.bind(this);
+    this.deleteAllItem = this.deleteAllItem.bind(this);
   }
 
   async componentDidMount() {
@@ -66,6 +67,14 @@ class TodosHandler extends React.Component {
 
   checkItem = (key) => {
     alert('Todo');
+  };
+
+  deleteAllItem = async () => {
+    await axios.delete('/delTodos');
+
+    await axios
+      .get('/getTodos')
+      .then((res) => this.setState({ todos: res.data }));
   };
 
   render() {
@@ -125,7 +134,9 @@ class TodosHandler extends React.Component {
               <div className='delete-btn'>Delete Completed </div>
             </Col>
             <Col md={3} sm={12}>
-              <div className='delete-btn'>Delete All </div>
+              <div className='delete-btn' onClick={this.deleteAllItem}>
+                Delete All{' '}
+              </div>
             </Col>
           </Row>
         </center>

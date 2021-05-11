@@ -38,4 +38,15 @@ router.delete('/delTodo/:id', (req, res) => {
   Todos.findByIdAndDelete(req.params.id).then(() => res.json({ remove: true }));
 });
 
+//Delete Todos
+router.delete('/delTodos', (req, res) => {
+  Todos.remove({}, () => {
+    try {
+      res.json({ removeAll: true });
+    } catch (err) {
+      console.log(err.message);
+    }
+  });
+});
+
 module.exports = router;
