@@ -72,6 +72,7 @@
 
 .todo-item input {
   border: 0;
+  width: 70%;
 }
 
 .todo-item input:focus {
@@ -101,4 +102,8 @@
   position: absolute;
   right: 45px;
   cursor: pointer;
+}
+
+.striked {
+  text-decoration: line-through;
 }

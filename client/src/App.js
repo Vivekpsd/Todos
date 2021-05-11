@@ -2,7 +2,7 @@ import './App.css';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col } from 'react-bootstrap';
-import InputBox from './components/InputBox';
+import TodosHandler from './components/TodosHandler';
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
             <center>
               <h1 className='main-head'>Todos</h1>
             </center>
-            <InputBox />
+            <TodosHandler />
           </Col>
         </Row>
       </Container>

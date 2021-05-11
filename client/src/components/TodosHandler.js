@@ -1,9 +1,9 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import TodoItem from './TodoItem';
-import TodoList from './TodoList';
+import FilterButtons from './FilterButtons';
 
-class InputBox extends React.Component {
+class TodosHandler extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -12,6 +12,7 @@ class InputBox extends React.Component {
         text: '',
         key: '',
         completed: '',
+        class: '',
       },
     };
     this.handleInput = this.handleInput.bind(this);
@@ -79,11 +80,15 @@ class InputBox extends React.Component {
     let newValue = '';
     this.state.items.map((item) => {
       if (item.key === key) {
-        item.completed = true;
-        newValue = item.text
-          .split('')
-          .map((char) => char + '\u0336')
-          .join('');
+        if (item.class === 'striked') {
+          item.class = '';
+          item.completed = 'false';
+        } else {
+          item.class = 'striked';
+          item.completed = true;
+        }
+
+        newValue = item.text;
       }
     });
 
@@ -138,7 +143,7 @@ class InputBox extends React.Component {
           </Container>
         </form>
         <center>
-          <TodoList />
+          <FilterButtons />
           {this.state.items.length === 0 ? (
             <div>
               <Container fluid className='filter-box'>
@@ -177,4 +182,4 @@ class InputBox extends React.Component {
   }
 }
 
-export default InputBox;
+export default TodosHandler;
