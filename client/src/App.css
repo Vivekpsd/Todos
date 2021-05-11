@@ -107,3 +107,11 @@
 .striked {
   text-decoration: line-through;
 }
+
+.alert-message {
+  margin-top: '450px';
+  position: 'fixed';
+  z-index: '99';
+  margin-left: '10px';
+  width: 20px;
+}
