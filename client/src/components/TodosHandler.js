@@ -35,7 +35,7 @@ class TodosHandler extends React.Component {
 
   async componentDidMount() {
     await axios
-      .get('/getTodos')
+      .get('/api/Todos/getTodos')
       .then((res) => this.setState({ todos: res.data }));
   }
 
@@ -53,10 +53,10 @@ class TodosHandler extends React.Component {
     e.preventDefault();
     const newTodo = this.state.currentTodo;
     if (newTodo.task !== '') {
-      await axios.post('/addTodo', newTodo);
+      await axios.post('/api/Todos/addTodo', newTodo);
 
       await axios
-        .get('/getTodos')
+        .get('/api/Todos/getTodos')
         .then((res) => this.setState({ todos: res.data }));
     }
 
@@ -71,33 +71,33 @@ class TodosHandler extends React.Component {
   };
 
   deleteItem = async (key) => {
-    await axios.delete(`/delTodo/${key}`);
+    await axios.delete(`/api/Todos/delTodo/${key}`);
 
     await axios
-      .get('/getTodos')
+      .get('/api/Todos/getTodos')
       .then((res) => this.setState({ todos: res.data }));
   };
 
   deleteCompletedItem = async () => {
-    await axios.delete('/delCompletedTodos/');
+    await axios.delete('/api/Todos/delCompletedTodos/');
     await axios
-      .get('/getTodos')
+      .get('/api/Todos/getTodos')
       .then((res) => this.setState({ todos: res.data }));
   };
 
   checkedItem = async (key) => {
-    await axios.post(`/updateTodo/${key}`);
+    await axios.post(`/api/Todos/updateTodo/${key}`);
 
     await axios
-      .get('/getTodos')
+      .get('/api/Todos/getTodos')
       .then((res) => this.setState({ todos: res.data }));
   };
 
   deleteAllItem = async () => {
-    await axios.delete('/delTodos');
+    await axios.delete('/api/Todos/delTodos');
 
     await axios
-      .get('/getTodos')
+      .get('/api/Todos/getTodos')
       .then((res) => this.setState({ todos: res.data }));
   };
 
@@ -105,7 +105,7 @@ class TodosHandler extends React.Component {
 
   getCompletedItems = async () => {
     await axios
-      .get('/getTodos')
+      .get('/api/Todos/getTodos')
       .then((res) => this.setState({ todos: res.data }));
 
     let allTodos = this.state.todos.filter((todo) => todo.completed !== false);
@@ -115,7 +115,7 @@ class TodosHandler extends React.Component {
 
   getNotCompletedItems = async () => {
     await axios
-      .get('/getTodos')
+      .get('/api/Todos/getTodos')
       .then((res) => this.setState({ todos: res.data }));
 
     let allTodos = this.state.todos.filter((todo) => todo.completed === false);
@@ -125,7 +125,7 @@ class TodosHandler extends React.Component {
 
   getAllItems = async () => {
     await axios
-      .get('/getTodos')
+      .get('/api/Todos/getTodos')
       .then((res) => this.setState({ todos: res.data }));
   };
 

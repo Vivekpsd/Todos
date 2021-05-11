@@ -7,15 +7,13 @@ import Zoom from 'react-reveal/Zoom';
 export default function TodoItem(props) {
   return (
     <div className='todo-item-box'>
-      {props.items.task === undefined || props.items.task === '' ? (
-        <p>Loading...</p>
-      ) : (
-        <Container fluid className='filter-box'>
-          Todo List
-          <Row className='justify-content-center '>
-            <Col md={6}>
-              <hr></hr>
-              {props.items.map((item) => {
+      <Container fluid className='filter-box'>
+        Todo List
+        <Row className='justify-content-center '>
+          <Col md={6}>
+            <hr></hr>
+            {props.items.length !== 0 &&
+              props.items.map((item) => {
                 return (
                   <Zoom duration={200}>
                     <Card className='todo-item'>
@@ -39,10 +37,9 @@ export default function TodoItem(props) {
                   </Zoom>
                 );
               })}
-            </Col>
-          </Row>
-        </Container>
-      )}
+          </Col>
+        </Row>
+      </Container>
     </div>
   );
 }
