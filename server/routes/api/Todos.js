@@ -40,7 +40,7 @@ router.delete('/delTodo/:id', (req, res) => {
 
 //Delete Todos
 router.delete('/delTodos', (req, res) => {
-  Todos.remove({}, () => {
+  Todos.deleteMany({}, () => {
     try {
       res.json({ removeAll: true });
     } catch (err) {
