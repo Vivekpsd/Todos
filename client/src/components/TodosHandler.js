@@ -21,6 +21,7 @@ class TodosHandler extends React.Component {
         completed: false,
         class: '',
       },
+      case: false,
     };
     this.deleteItem = this.deleteItem.bind(this);
     this.checkedItem = this.checkedItem.bind(this);
@@ -110,6 +111,12 @@ class TodosHandler extends React.Component {
 
     let allTodos = this.state.todos.filter((todo) => todo.completed !== false);
 
+    if (allTodos.length === 0) {
+      this.setState({ case: true });
+    } else {
+      this.setState({ case: false });
+    }
+
     this.setState({ todos: allTodos });
   };
 
@@ -120,13 +127,13 @@ class TodosHandler extends React.Component {
 
     let allTodos = this.state.todos.filter((todo) => todo.completed === false);
 
-    this.setState({ todos: allTodos });
+    this.setState({ todos: allTodos, case: false });
   };
 
   getAllItems = async () => {
     await axios
       .get('/api/Todos/getTodos')
-      .then((res) => this.setState({ todos: res.data }));
+      .then((res) => this.setState({ todos: res.data, case: false }));
   };
 
   render() {
@@ -171,7 +178,11 @@ class TodosHandler extends React.Component {
                 <Row className='justify-content-center '>
                   <Col md={6}>
                     <div className='alert alert-success alert-msg'>
-                      No Task Pending. Enjoy Your Free Time!
+                      {this.state.case !== true ? (
+                        <div>No Task Pending. Enjoy Your Free Time!</div>
+                      ) : (
+                        <div>No Completed Tasks!</div>
+                      )}
                     </div>
                   </Col>
                 </Row>
