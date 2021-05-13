@@ -102,7 +102,7 @@ class TodosHandler extends React.Component {
       .then((res) => this.setState({ todos: res.data }));
   };
 
-  // Filtering
+  // Filtering Tasks
 
   getCompletedItems = async () => {
     await axios
